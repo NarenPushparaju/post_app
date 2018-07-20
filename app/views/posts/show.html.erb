@@ -1,7 +1,8 @@
 <p>
   Name: <%= @show.name%><br>
   HasTag: <%= @show.hastag%><br>
-    Description: <%= @show.description %><br></p>
+    Description: <%= @show.description %><br>
+   TopicID:<%= @show.topic_id %></p>
 <p><%= link_to "Delete", post_path(@show),
                    :data => {:confirm => "You sure?",
                              :method => "delete"} %></p>

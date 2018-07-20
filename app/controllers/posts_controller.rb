@@ -34,11 +34,18 @@ class PostsController < ApplicationController
         render 'edit'
       end
   end
+  def topic
+    @topic=Post.where(topic_id: params[:id])
+    @title=Topic.find(params[:id])
+    if @title.blank?
+      flash[:notice]="Posts Not Found"
+    end
+  end
 end
 private
 
 def post_params
-  params.require(:post).permit(:name,:hastag, :description)
+  params.require(:post).permit(:name,:hastag, :description,:topic_id)
 end
 
 
