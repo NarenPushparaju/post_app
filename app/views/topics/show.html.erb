@@ -1,6 +1,6 @@
 <p>
-  Name: <%= @show.topic%><br>
-<p><%= link_to "Delete", topic_path(@show),
+  Name: <%= @topic.topic%><br>
+<p><%= link_to "Delete", topic_path(@topic),
                :data => {:confirm => "You sure?",
                          :method => "delete"} %></p>
 

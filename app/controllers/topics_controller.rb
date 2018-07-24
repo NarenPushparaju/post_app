@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  before_action :set_topic, only: [:show,:edit,:destroy,:update]
   def index
     @topics=Topic.all
   end
@@ -6,7 +7,6 @@ class TopicsController < ApplicationController
     @topic=Topic.new
   end
   def show
-    @show=Topic.find(params[:id])
   end
   def create
     @topic = Topic.new(topic_params)
@@ -17,15 +17,12 @@ class TopicsController < ApplicationController
     end
   end
   def edit
-    @topic = topic.find(params[:id])
   end
   def destroy
-    @topic=topic.find(params[:id])
     @topic.destroy
     redirect_to topics_path
   end
   def update
-    @topic = topic.find(params[:id])
     if @topic.update(topic_params)
       flash[:notice]="Updated Successfully"
       redirect_to topic_path
@@ -38,6 +35,9 @@ private
 
 def topic_params
   params.require(:topic).permit(:topic)
+end
+def set_topic
+  @topic=Topic.find(params[:id])
 end
 
 

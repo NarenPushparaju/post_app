@@ -1,9 +1,18 @@
 <p>
-  Name: <%= @show.name%><br>
-  HasTag: <%= @show.hastag%><br>
-    Description: <%= @show.description %><br>
-   TopicID:<%= @show.topic_id %></p>
-<p><%= link_to "Delete", post_path(@show),
+  Name: <%= @post.name%><br>
+  HasTag: <%= @post.hastag%><br>
+    Description: <%= @post.description %><br>
+   TopicID:<%= @post.topic_id %></p>
+
+<div class="jumbotron">
+
+<p>Comments</p>
+<% @comment.each do |c| %>
+  <%= c.created_at.to_date %><br>
+<%= c.comment %><br>
+  <% end %>
+ <%= link_to "Add Comment", new_comment_path(post_id: @post.id) %>
+<p><%= link_to "Delete", post_path(@post),
                    :data => {:confirm => "You sure?",
                              :method => "delete"} %></p>
-
+</div>
