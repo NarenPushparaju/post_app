@@ -1,5 +1,10 @@
 class CommentsController < ApplicationController
+  def index
+    @comment=Comment.where(post_id: params[:post_id])
+    @id=params[:post_id]
+  end
   def new
+    @post=Post.find(params[:post_id])
     @comment=Comment.new(post_id: params[:post_id])
     @comment.post_id
   end
@@ -12,6 +17,11 @@ class CommentsController < ApplicationController
     else
       render 'new'
     end
+  end
+  def destroy
+    @comment=Comment.find(params[:id])
+    @comment.destroy
+    redirect_to post_path(@comment.post_id)
   end
 end
 private

@@ -2,6 +2,6 @@
 <table class="table">
 <% @topics.each do |t| %>
   <%= t.id %>
-  <%= t.topic %><br>
+  <%= link_to t.topic,topic_posts_path(topic_id: t.id) %><br>
 <% end %>
 </table>

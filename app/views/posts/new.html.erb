@@ -1,26 +1,12 @@
+<%provide(:page_title,'New post') %>
 <h1>New Post</h1>
-<% if @post.errors.any?  %>
-  <ul>
-    <% @post.errors.full_messages.each do |m| %>
-      <li><%= m %></li>
-    <%end %>
-  </ul>
-<% end %>
-<%= form_for (@post) do |f|%>
+<%= form_for ([@topic,@posts]) do |f|%>
   <p>
     <%= f.label :name,"Name" %><br>
     <%= f.text_field :name %></p>
   <p>
-    <%= f.label :hastag %><br>
-    <%= f.text_area :hastag %>
-  </p>
-  <p>
   <%= f.label :description %><br>
   <%= f.text_field :description %>
-  </p>
-  <p>
-    <%= f.label :topic_id,"Topic-Id" %><br>
-    <%= f.text_field :topic_id%>
   </p>
     <%= f.fields_for :comments do |builder|%>
       <fieldset>
@@ -28,6 +14,23 @@
       <%= builder.text_field :comment %>
       </fieldset>
       <% end %>
+  <h3>Create Tag OR choose a tag</h3>
+  <div class="field">
+    <%= f.label "Choose a tag" %><br />
+    <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :tag do |b| %>
+      <div class="collection-check-box">
+        <%= b.check_box %>
+        <%= b.label %>
+      </div>
+    <% end %>
+  </div>
+  <%= f.fields_for :tags do |builder|%>
+    <fieldset>
+      <%= builder.label :tag %><br>
+      <%= builder.text_field :tag %>
+    </fieldset>
+  <% end %>
+  <%= f.hidden_field :topic_id %>
   <p>
     <%= f.submit class: "btn btn-success" %>
   </p>

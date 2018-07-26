@@ -1,17 +1,27 @@
-<p>
-  Name: <%= @post.name%><br>
-  HasTag: <%= @post.hastag%><br>
-    Description: <%= @post.description %><br>
-   TopicID:<%= @post.topic_id %></p>
+<%provide(:page_title,@post.name) %>
+<h3 align="center"><%= "#{@post.name}(#{@topic.topic})"%></h3><br>
+<p align="justify">
+  <%= @post.description %></p>
+  <br>
+<%= link_to 'Edit',edit_post_path(@post) %>
+
+<% if @tags.exists? %>
+<h2>Tags associated</h2>
+<% @tags.each do |t|  %>
+    <%='#'%><%=link_to t.tag, '#'   %>
+<% end  %>
+  <% end %>
+
 
 <div class="jumbotron">
+
 
 <p>Comments</p>
 <% @comment.each do |c| %>
   <%= c.created_at.to_date %><br>
-<%= c.comment %><br>
+<%= c.comment %><%= link_to "Delete", comment_path(c.id),method: :delete%><br>
   <% end %>
- <%= link_to "Add Comment", new_comment_path(post_id: @post.id) %>
+  <%= link_to "Add Comment",new_post_comment_path(post_id: @post.id) %>
 <p><%= link_to "Delete", post_path(@post),
                    :data => {:confirm => "You sure?",
                              :method => "delete"} %></p>

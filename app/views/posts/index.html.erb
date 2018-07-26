@@ -1,24 +1,20 @@
-h1>Posts</h1>
+<%provide(:page_title,@title.topic) %>
+<h1>Posts</h1>
 <h2><%= @title.topic %></h2>
-<table>
+<table class="table">
   <thead>
   <tr>
-    <th>ID</th>
-    <th>NAME</th>
-    <th>#TAG</th>
-    <th>DESCRIPTION</th>
-    <th>Topic_ID</th>
+    <th>POSTS</th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
-  <% @topic.each do |t|  %>
+  <% @post.each do |t|  %>
     <tr>
-      <td><%= t.id %></td>
-      <td><%= t.name %></td>
-      <td><%= t.hastag %></td>
-      <td><%= t.description %></td>
-      <td><%= t.topic_id %></td>
+      <td><%=link_to t.name,post_path(t.id) %></td>
+      <td><%= link_to "Delete",post_path(t.id),method: :delete %></td>
     </tr>
   <% end %>
   </tbody>
 </table>
+<%= link_to 'Add Post',new_topic_post_path %>

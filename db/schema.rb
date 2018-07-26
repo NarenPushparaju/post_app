@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723043345) do
+ActiveRecord::Schema.define(version: 20180725060413) do
 
   create_table "comments", force: :cascade do |t|
     t.text "comment"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 20180723043345) do
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
+  create_table "parts", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_parts_on_post_id"
+    t.index ["tag_id"], name: "index_parts_on_tag_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "name"
     t.text "hastag"
@@ -27,6 +36,12 @@ ActiveRecord::Schema.define(version: 20180723043345) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "topic_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "tag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "topics", force: :cascade do |t|

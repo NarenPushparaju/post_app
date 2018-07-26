@@ -1,5 +1,5 @@
 <h1>Comments</h1>
-<%= form_for (@comment) do |f|%>
+<%= form_for ([@post,@comment]) do |f|%>
   <% p @comment %>
   <% if @comment.errors.any? %>
     <div id="error_explanation">
@@ -21,4 +21,3 @@
     <%= f.submit class: "btn btn-success" %>
   </p>
 <% end %>
-
