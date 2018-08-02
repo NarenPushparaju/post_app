@@ -1,22 +1,22 @@
-<%provide(:page_title,'New post') %>
+<% provide(:page_title, 'New post') %>
 <h1>New Post</h1>
-<%= form_for ([@topic,@posts]) do |f|%>
+<%= form_for ([@topic, @posts]) do |f| %>
   <p>
-    <%= f.label :name,"Name" %><br>
+    <%= f.label :name, "Name" %><br>
     <%= f.text_field :name %></p>
   <p>
-  <%= f.label :description %><br>
-  <%= f.text_field :description %>
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
   </p>
-    <%= f.fields_for :comments do |builder|%>
-      <fieldset>
-    <%= builder.label :comment %><br>
+  <%= f.fields_for :comments do |builder| %>
+    <fieldset>
+      <%= builder.label :comment %><br>
       <%= builder.text_field :comment %>
-      </fieldset>
-      <% end %>
+    </fieldset>
+  <% end %>
   <h3>Create Tag OR choose a tag</h3>
   <div class="field">
-    <%= f.label "Choose a tag" %><br />
+    <%= f.label "Choose a tag" %><br/>
     <%= f.collection_check_boxes :tag_ids, Tag.all, :id, :tag do |b| %>
       <div class="collection-check-box">
         <%= b.check_box %>
@@ -24,14 +24,13 @@
       </div>
     <% end %>
   </div>
-  <%= f.fields_for :tags do |builder|%>
+  <%= f.fields_for :tags do |builder| %>
     <fieldset>
       <%= builder.label :tag %><br>
       <%= builder.text_field :tag %>
     </fieldset>
   <% end %>
-  <%= f.hidden_field :topic_id %>
   <p>
     <%= f.submit class: "btn btn-success" %>
   </p>
-<%end %>
+<% end %>

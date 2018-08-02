@@ -12,11 +12,31 @@
 <% end  %>
   <% end %>
 
+<%= form_tag(controller: :posts,action: :rate,method: :post) do %>
+  <% for i in 1..5  %>
+    <%= radio_button_tag(:rate,i) %>
+    <%= label_tag('name',i) %>
+    <% end  %>
+    <%= submit_tag('Rate',name: @post.id) %>
+  <% end %>
+<%t=0 %>
+<% @rate.each do |k,v| %>
+  <%t.times do  %>
+    &nbsp
+    <% end %>
+  <%k.times do  %>
+    <%="*"%>
+    <% end %>
+  <%= v %><br>
+    <%t=t+1 %>
+  <% end %>
+
+
 
 <div class="jumbotron">
 
 
-<p>Comments</p>
+<%= "Comments(#{@post.comments.count})" %><br>
 <% @comment.each do |c| %>
   <%= c.created_at.to_date %><br>
 <%= c.comment %><%= link_to "Delete", comment_path(c.id),method: :delete%><br>
@@ -26,3 +46,5 @@
                    :data => {:confirm => "You sure?",
                              :method => "delete"} %></p>
 </div>
+
+<%= will_paginate @comment ,previous_lable: '<',next_lable: '>' %>

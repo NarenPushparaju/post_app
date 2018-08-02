@@ -1,0 +1,11 @@
+<div class="col-sm-6 col-lg-4">
+  <div class="card">
+    <div class="card-topper" style='background-image: url("http://www.birds.com/wp-content/uploads/home/bird4.jpg")'></div>
+    <div class="card-block">
+      <h4 class="card-title"><%= link_to post.name, post_path(post.id)%></h4>
+      <p class="card-text"><%= truncate(post.description,length:30) %></p>
+      <%= link_to 'Read',post_path(post.id),class: 'btn btn-read' %>
+      <%= link_to "Delete",post_path(post.id),method: :delete %>
+    </div>
+  </div>
+</div>

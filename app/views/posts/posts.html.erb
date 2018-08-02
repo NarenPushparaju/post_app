@@ -1,18 +1,8 @@
 <%provide(:page_title,"All Post") %>
 <h1>Posts</h1>
-<table class="table">
-  <thead>
-  <tr>
-    <th>NAME</th>
-    <th>DESCRIPTION</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @posts.each do |t|  %>
-    <tr>
-      <td><%= t.name %></td>
-      <td><%= t.description %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <% @posts.each do |post|  %>
+    <%= render post %>
+    <% end %>
+    </div>
+<%= will_paginate @posts ,previous_lable: '<',next_lable: '>' %>

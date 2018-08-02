@@ -1,20 +1,11 @@
 <%provide(:page_title,@title.topic) %>
 <h1>Posts</h1>
 <h2><%= @title.topic %></h2>
-<table class="table">
-  <thead>
-  <tr>
-    <th>POSTS</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @post.each do |t|  %>
-    <tr>
-      <td><%=link_to t.name,post_path(t.id) %></td>
-      <td><%= link_to "Delete",post_path(t.id),method: :delete %></td>
-    </tr>
+<div class="row">
+  <% @post.each do |post|  %>
+    <%= post.comments.length %>
+    <%= render post %>
   <% end %>
-  </tbody>
-</table>
+</div>
+<%= will_paginate @post ,previous_lable: '<',next_lable: '>' %>
 <%= link_to 'Add Post',new_topic_post_path %>

@@ -1,8 +1,7 @@
 <h1>New Topic</h1>
 <%= form_for (@topic) do |f|%>
   <div class="field form-group">
-    <%= f.label :topic %><br>
-    <%= f.text_field :topic,class: "form-control",class: "col-xs-2",placeholder: "Type the topic"%>
+    <%= f.text_field :topic,class: "form-control",class: "col-xs-2",placeholder: "Type the topic"%><br>
   </div>
   <div class="field form-group">
     <%= f.submit 'Add Topic',class: 'btn btn-success' %>

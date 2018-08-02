@@ -1,7 +1,6 @@
 <h1>Topics</h1>
 <table class="table">
 <% @topics.each do |t| %>
-  <%= t.id %>
-  <%= link_to t.topic,topic_posts_path(topic_id: t.id) %><br>
+  <%= link_to t.topic,topic_posts_path(topic_id: t.id) %><%= "(#{t.posts.count})" %><br>
 <% end %>
 </table>
