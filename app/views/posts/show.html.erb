@@ -1,50 +1,50 @@
-<%provide(:page_title,@post.name) %>
-<h3 align="center"><%= "#{@post.name}(#{@topic.topic})"%></h3><br>
+<% provide(:page_title, @post.title) %>
+<h3 align="center"><%= "#{@post.title}(#{@topic.topic})" %></h3><br>
 <p align="justify">
-  <%= @post.description %></p>
-  <br>
-<%= link_to 'Edit',edit_post_path(@post) %>
-
-<% if @tags.exists? %>
-<h2>Tags associated</h2>
-<% @tags.each do |t|  %>
-    <%='#'%><%=link_to t.tag, '#'   %>
-<% end  %>
+<h2>Description</h2>
+<%= @post.description %></p>
+<%= link_to 'Edit', edit_topic_post_path(id: @post) %>
+<%= link_to "Delete", topic_post_path(id: @post), method: :delete %>
+<%= link_to "Add Tag", new_post_tag_path(post_id: @post) %><br>
+<% if @tag.present? %>
+  <h3>Tags</h3>
+  <% @tag.each do |t| %>
+    <%= "##{t.tag}" %>
   <% end %>
-
-<%= form_tag(controller: :posts,action: :rate,method: :post) do %>
-  <% for i in 1..5  %>
-    <%= radio_button_tag(:rate,i) %>
-    <%= label_tag('name',i) %>
-    <% end  %>
-    <%= submit_tag('Rate',name: @post.id) %>
+<% end %>
+<%= form_tag(controller: :posts, action: :rate,:topic_id => @post.topic_id,:post_id => @post.id,method: :post) do %>
+  <% for i in 1..5 %>
+    <%= radio_button_tag(:rate, i) %>
+    <%= label_tag('name', i) %>
+    <%= hidden_field_tag(:post_id,@post.id) %>
+    <%= hidden_field_tag(:topic_id, @post.topic_id) %>
   <% end %>
-<%t=0 %>
-<% @rate.each do |k,v| %>
-  <%t.times do  %>
-    &nbsp
+  <%= submit_tag('Rate',post_id: @post.id)%>
+<% end %>
+<% t = 0 %>
+<% if @rate.present? %>
+  <% @rate.each do |k, v| %>
+    <% t.times do %>
+      &nbsp
     <% end %>
-  <%k.times do  %>
-    <%="*"%>
+    <% k.times do %>
+      <%= "*" %>
     <% end %>
-  <%= v %><br>
-    <%t=t+1 %>
+    <%= v %><br>
+    <% t = t + 1 %>
   <% end %>
-
-
-
+<% end %>
+<%= "Average Rating #{@avg_rate}"  %>
 <div class="jumbotron">
-
-
-<%= "Comments(#{@post.comments.count})" %><br>
-<% @comment.each do |c| %>
-  <%= c.created_at.to_date %><br>
-<%= c.comment %><%= link_to "Delete", comment_path(c.id),method: :delete%><br>
+  <% if @comment.present? %>
+    <h3>Comments</h3>
+    <% @comment.each do |c| %>
+      <%= c.updated_at.to_time %><br>
+      <%= c.comment %>
+      <%= link_to "Edit", edit_post_comment_path(post_id: @post.id, id: c.id) %>
+      <%= link_to "Delete", post_comment_path(post_id: @post.id, id: c.id), method: :delete %><br>
+    <% end %>
+    </div>
   <% end %>
-  <%= link_to "Add Comment",new_post_comment_path(post_id: @post.id) %>
-<p><%= link_to "Delete", post_path(@post),
-                   :data => {:confirm => "You sure?",
-                             :method => "delete"} %></p>
-</div>
 
-<%= will_paginate @comment ,previous_lable: '<',next_lable: '>' %>
+  <%= link_to "Add Comments", new_post_comment_path(@post.id) %>

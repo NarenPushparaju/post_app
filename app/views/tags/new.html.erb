@@ -1,2 +1,6 @@
-<h1>Tags#new</h1>
-<p>Find me in app/views/tags/new.html.erb</p>
+<h3>Add Tag</h3>
+<%= form_for ([@post,@tag]) do |f| %>
+  <%= f.label :tag,"Tag" %>
+  <%= f.text_field :tag %>
+  <%= f.submit "Submit", class: "btn btn-success" %>
+<% end  %>

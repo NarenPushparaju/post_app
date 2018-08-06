@@ -1,14 +1,18 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Post, type: :model do
   before(:each) do
-    @topic=Topic.new(topic:"TN")
-    @post=Post.new(name: "naren", description: "hello",topic_id: @topic).save
+    @post=Post.new(title: "naren", description: "hello",topic_id: 1)
+  end
+  it 'ensures presence' do
+    expect(@post).to be_valid
   end
   it 'ensures title presence' do
-    expect(@post).to eq(true)
+    @post.title=""
+    expect(@post).to_not be_valid
   end
-  it 'ensures titile presence' do
-    expect(@post).to eq(false)
+  it 'ensures description presence' do
+    @post.description=""
+    expect(@post).to be_valid
   end
 end

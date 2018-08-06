@@ -1,9 +1,4 @@
 <h1>Editing</h1>
-<%= form_for @topic do |f|%>
-  <p>
-    <%= f.label :topic %><br>
-    <%= f.text_field :topic %></p>
-  <p>
-    <%= f.submit %>
-  </p>
-<%end %>
+
+<%= render :partial => "form", :locals =>
+    { :button_label => "Update Post", :topic => @topic } %>

@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180731092157) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string "name"
+    t.string "title"
     t.text "hastag"
     t.text "description"
     t.datetime "created_at", null: false

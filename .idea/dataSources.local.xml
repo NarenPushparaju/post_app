@@ -14,5 +14,9 @@
     <data-source name="development [2]" uuid="3569004d-5de6-4c25-b510-207811ac19e2">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" family="SQLITE" exact-version="0.0" />
     </data-source>
+    <data-source name="development [3]" uuid="d5605a7d-ddeb-4e3d-8bc0-b2c7503435d3">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" family="SQLITE" exact-version="0.0" />
+      <auth-required>false</auth-required>
+    </data-source>
   </component>
 </project>

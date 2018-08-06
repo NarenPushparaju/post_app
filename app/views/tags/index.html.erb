@@ -1,4 +1,5 @@
 <h1>All tags present</h1>
 <% @tag.each do |t| %>
- <%= t.tag %><br>
+ <%= t.tag %>
+  <%= link_to "Delete",post_tag_path(id: t.id),method: :delete  %>
 <% end %>

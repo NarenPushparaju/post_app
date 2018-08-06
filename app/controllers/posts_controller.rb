@@ -1,37 +1,39 @@
 class PostsController < ApplicationController
 
-  before_action :set_topic
+  before_action :topic_set
   before_action :set_post, only: [:show, :edit, :destroy, :update]
 
   def index
-
     if @topic.present?
-      @posts = @topic.posts.includes(:comments)
+      @posts = @topic.posts.all
     else
-      @posts = Post.includes(:comments)
+      @posts = Post.all
     end
-
-    @posts = @posts.paginate(:page => params[:page], :per_page => 3)
+    @posts = @posts.paginate(:page => params[:page], :per_page => 6)
 
   end
 
   def new
-    @post = Post.new
-    @tag = Tag.all
+    @post = @topic.posts.new
+    @tag = @post.tags.new
+    @tag_all = Tag.all
   end
 
   def show
-    @comment = Comment.where(post_id: params[:id]).paginate(:page => params[:page], :per_page => 10)
-    @post.comments.build
+    @comment = @post.comments
+    @tag = @post.tags
+    @rate = @post.ratings
     @rate = Rating.where(post_id: @post.id).group("rate").count
     @rate = Hash[@rate.to_a.reverse]
+    @avg_rate = @post.ratings.average(:rate)
   end
 
   def create
-    @post = Post.new(post_params)
+
+    @post = @topic.posts.new(post_params)
     if @post.save
       flash[:notice] = "Post sent Successfully"
-      redirect_to post_path(@post.id)
+      redirect_to topic_post_path(id: @post.id)
     else
       render 'new'
     end
@@ -41,14 +43,10 @@ class PostsController < ApplicationController
   end
 
   def rate
-    @rate = Rating.new(rate: params[:rate], post_id: params[:postid])
+    @rate = Rating.new(rate: params[:rate], post_id: params[:post_id])
     if @rate.save
-      redirect_to post_path(params[:postid])
+      redirect_to topic_post_path(topic_id: params[:topic_id], id: params[:post_id])
     end
-  end
-
-  def posts
-    @posts = Post.paginate(:page => params[:page], :per_page => 10)
   end
 
   def destroy
@@ -59,7 +57,7 @@ class PostsController < ApplicationController
   def update
     if @post.update(post_params)
       flash[:notice] = "Updated Successfully"
-      redirect_to post_path
+      redirect_to topic_post_path(id: @post.id)
     else
       render 'edit'
     end
@@ -70,13 +68,15 @@ end
 private
 
 def post_params
-  params.require(:post).permit(:name, :hastag, :description, :topic_id, tag_ids: [], comments_attributes: [:comment], tags_attributes: [:tag])
+  params.require(:post).permit(:title, :description, tag_ids: [], tags_attributes: [:tag, :_destroy, :id])
 end
 
 def set_post
   @post = @topic.posts.find(params[:id])
 end
 
-def set_topic
-  @topic = Topic.find(params[:topic_id])
+def topic_set
+  if params[:topic_id].present?
+    @topic = Topic.find(params[:topic_id])
+  end
 end
