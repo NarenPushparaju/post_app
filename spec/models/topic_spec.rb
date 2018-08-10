@@ -1,20 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Topic, type: :model do
-  before(:each) do
-    @topic=Topic.new(topic: "Agfhgfhdg")
+  describe "validations" do
+    it "requires topic name" do
+      topic = build(:topic,topic: "" )
+      expect(topic.valid?).to be_falsey
     end
 
-  it "is valid with valid attributes" do
-      expect(@topic).to be_valid
-  end
-
-  it "is not valid without title" do
-    @topic.topic=""
-    expect(@topic).to_not be_valid
-  end
-  it "enter minimum three character" do
-    @topic.topic = "er"
-    expect(@topic).to_not be_valid
+    it "requires topic name to have minimum length" do
+      topic = build(:topic,topic:'he')
+      expect(topic.valid?).to be_falsey
+    end
   end
 end

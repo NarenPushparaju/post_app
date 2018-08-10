@@ -1,6 +1,7 @@
 <% provide(:page_title, @post.title) %>
 <h3 align="center"><%= "#{@post.title}(#{@topic.topic})" %></h3><br>
 <p align="justify">
+<%=image_tag @post.image.url(:medium) %>
 <h2>Description</h2>
 <%= @post.description %></p>
 <%= link_to 'Edit', edit_topic_post_path(id: @post) %>

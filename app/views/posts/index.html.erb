@@ -9,5 +9,23 @@
   <% @posts.each do |p| %>
     <%= link_to p.title,topic_post_path(topic_id: p.topic_id,id: p.id)%>
     <%= "(#{p.topic.topic})" %><br>
+    <%= "Avg.rate:#{p.ratings.average(:rate).to_f.round(2)}"%><br>
+    <%= "#{p.comments.count} comments" %><br>
   <%end %>
 <%= will_paginate @posts ,previous_lable: '<',next_lable: '>' %>
+
+
+
+
+
+<%provide(:page_title,@title.topic) %>
+<h1>Posts</h1>
+<h2><%= @title.topic %></h2>
+<div class="row">
+  <% @post.each do |post|  %>
+    <%= post.comments.length %>
+    <%= render post %>
+  <% end %>
+</div>
+<%= will_paginate @post ,previous_lable: '<',next_lable: '>' %>
+<%= link_to 'Add Post',new_topic_post_path %>

@@ -7,9 +7,9 @@ class PostsController < ApplicationController
     if @topic.present?
       @posts = @topic.posts.all
     else
-      @posts = Post.all
+      @posts = Post.includes(:topic)
     end
-    @posts = @posts.paginate(:page => params[:page], :per_page => 6)
+    @posts = @posts.paginate(:page => params[:page], :per_page => 2)
 
   end
 
@@ -22,8 +22,7 @@ class PostsController < ApplicationController
   def show
     @comment = @post.comments
     @tag = @post.tags
-    @rate = @post.ratings
-    @rate = Rating.where(post_id: @post.id).group("rate").count
+    @rate = @post.ratings.group("rate").count
     @rate = Hash[@rate.to_a.reverse]
     @avg_rate = @post.ratings.average(:rate)
   end
@@ -68,7 +67,7 @@ end
 private
 
 def post_params
-  params.require(:post).permit(:title, :description, tag_ids: [], tags_attributes: [:tag, :_destroy, :id])
+  params.require(:post).permit(:title, :image ,:description, tag_ids: [],tags_attributes: [:tag, :_destroy, :id])
 end
 
 def set_post

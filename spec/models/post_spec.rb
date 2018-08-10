@@ -1,18 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  before(:each) do
-    @post=Post.new(title: "naren", description: "hello",topic_id: 1)
+
+  describe Post do
+    it "present" do
+      post = build(:post,title:'')
+      expect(post.valid?).to be_falsey
+    end
+    it "minimum 3 char long" do
+      post = build(:post,title:'23')
+      expect(post.valid?).to be_falsey
+    end
+    it "is invalid without a title" do
+      post1 = Post.new(title: nil)
+      post1.valid?
+      expect(post1.errors[:title]).to include("can't be blank")
+    end
+    describe "The body should be" do
+      it "present" do
+        post = build(:post,description:'')
+        expect(post.valid?).to be_falsey
+      end
+
+    end
   end
-  it 'ensures presence' do
-    expect(@post).to be_valid
+
+  describe Post do
+    it 'Post has many comments' do
+      assc=Post.reflect_on_association(:comments)
+      expect(assc.macro).to eq :has_many
+    end
   end
-  it 'ensures title presence' do
-    @post.title=""
-    expect(@post).to_not be_valid
-  end
-  it 'ensures description presence' do
-    @post.description=""
-    expect(@post).to be_valid
+  describe Post do
+    it "Post have many ratings" do
+      assc=Post.reflect_on_association(:ratings)
+      expect(assc.macro).to eq :has_many
+    end
   end
 end

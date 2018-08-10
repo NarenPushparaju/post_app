@@ -1,11 +1,12 @@
 <div class="col-sm-6 col-lg-4">
   <div class="card">
-    <div class="card-topper" style='background-image: url("http://www.birds.com/wp-content/uploads/home/bird4.jpg")'></div>
+    <div class="card-topper"<%=image_tag post.image.url(:medium) %> ></div>
     <div class="card-block">
-      <h4 class="card-title"><%= link_to post.name, post_path(post.id)%></h4>
+      <h4 class="card-title"><%= link_to post.title, topic_post_path(topic_id: post.topic_id,id: post.id)%><%= "(#{post.topic.topic})" %><br></h4>
       <p class="card-text"><%= truncate(post.description,length:30) %></p>
-      <%= link_to 'Read',post_path(post.id),class: 'btn btn-read' %>
-      <%= link_to "Delete",post_path(post.id),method: :delete %>
+      <%= "Avg.rate:#{post.ratings.average(:rate).to_f.round(2)}"%><br>
+      <%= "#{post.comments.count} comments" %><br>
+      <%= link_to 'Read',topic_post_path(topic_id: post.topic_id,id: post.id),class: 'btn btn-read' %>
     </div>
   </div>
 </div>

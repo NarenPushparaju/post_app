@@ -1,4 +1,4 @@
-<%= form_for ([topic, post]) do |f| %>
+<%= form_for [topic,post],:html=> {multipart: true} do |f| %>
   <% if post.errors.any? %>
     <% post.errors.full_messages.each do |msg| %>
       <div class="alert alert-danger"><%= msg %></div>
@@ -7,6 +7,9 @@
   <p>
     <%= f.label :title %><br>
     <%= f.text_field :title %></p>
+  <p>
+    <%= f.label :image %><br>
+    <%= f.file_field :image %></p>
   <p>
     <%= f.label :description %><br>
     <%= f.text_area :description %>

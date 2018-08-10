@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  before_action :post_set
+  before_action :set_post
 
 
   def index
@@ -14,7 +14,7 @@ class TagsController < ApplicationController
     @tag = @post.tags.new(tag_params)
     if @tag.save
       flash[:notice] = "Tag added Successfully"
-      @part=Part.create(post_id: @post.id, tag_id: @tag.id)
+      @part=PostTag.create(post_id: @post.id, tag_id: @tag.id)
       redirect_to topic_post_path(topic_id: @topic, id: @post.id)
     else
       render 'new'
@@ -36,7 +36,7 @@ def tag_params
   params.require(:tag).permit(:tag,:post_id)
 end
 
-def post_set
+def set_post
   @post = Post.find(params[:post_id])
   @topic = @post.topic_id
 end
