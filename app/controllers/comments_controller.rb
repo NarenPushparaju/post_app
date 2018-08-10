@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_post_comment
+  before_action :set_post
   before_action :set_comment, only: [:show, :edit, :destroy, :update]
 
   def index
@@ -37,7 +37,6 @@ class CommentsController < ApplicationController
     @comment.destroy
     redirect_to topic_post_path(topic_id: @topic, id: @post.id)
   end
-end
 
 private
 
@@ -48,7 +47,8 @@ def set_comment
   @comment=@post.comments.find(params[:id])
 end
 
-def set_post_comment
+def set_post
   @post = Post.find(params[:post_id])
   @topic = @post.topic_id
+end
 end

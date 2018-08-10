@@ -17,7 +17,6 @@ class TopicsController < ApplicationController
     if @topic.save
       redirect_to topics_path
     else
-      p @topic.errors
       render 'new'
     end
   end
@@ -38,14 +37,14 @@ class TopicsController < ApplicationController
       render 'edit'
     end
   end
-end
 
-private
+  private
 
-def topic_params
-  params.require(:topic).permit(:topic)
-end
+  def topic_params
+    params.require(:topic).permit(:topic)
+  end
 
-def set_topic
-  @topic = Topic.find(params[:id])
+  def set_topic
+    @topic = Topic.find(params[:id])
+  end
 end

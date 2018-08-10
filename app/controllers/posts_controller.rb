@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_action :topic_set
+  before_action :set_topic
   before_action :set_post, only: [:show, :edit, :destroy, :update]
 
   def index
@@ -62,20 +62,19 @@ class PostsController < ApplicationController
     end
   end
 
-end
+  private
 
-private
+  def post_params
+    params.require(:post).permit(:title, :image, :description, tag_ids: [], tags_attributes: [:tag, :_destroy, :id])
+  end
 
-def post_params
-  params.require(:post).permit(:title, :image ,:description, tag_ids: [],tags_attributes: [:tag, :_destroy, :id])
-end
+  def set_post
+    @post = @topic.posts.find(params[:id])
+  end
 
-def set_post
-  @post = @topic.posts.find(params[:id])
-end
-
-def topic_set
-  if params[:topic_id].present?
-    @topic = Topic.find(params[:topic_id])
+  def set_topic
+    if params[:topic_id].present?
+      @topic = Topic.find(params[:topic_id])
+    end
   end
 end

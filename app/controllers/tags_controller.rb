@@ -29,7 +29,6 @@ class TagsController < ApplicationController
     @tag.destroy
     redirect_to posts_path
   end
-end
 private
 
 def tag_params
@@ -39,4 +38,5 @@ end
 def set_post
   @post = Post.find(params[:post_id])
   @topic = @post.topic_id
+end
 end
