@@ -10,6 +10,55 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+//= require rails.validations
+//= require_tree
+
+window.ClientSideValidations.callbacks.element.fail = function(element, message, callback) {
+    $('.submit').prop("disabled",true);
+    callback();
+};
+
+window.ClientSideValidations.callbacks.element.pass = function(element, callback) {
+    $('.submit').prop("disabled",false);
+    callback();
+};
+// $(document).ajaxSuccess(function(){
+//     if($('form[data-validate]').length){
+//         $('form[data-validate]').enableClientSideValidations();
+//     }
+// });
+
+
+
+//
+// $(function(){
+//     $("#comment").click(function() {
+//         $('#hidecomment').toggle();
+//         $('#comment_comment').focus();
+//     });
+// });
+// // $(function () {
+// //     $('#hide').click(function () {
+// //         $('#read').hide();
+// //     })
+// // });
+// // $(function () {
+// //     $("#hidecomment").hide();
+// //
+// // })
+// $(function() {
+//
+// //     $('.read').click(function () {
+// //         $('.status').hide();
+//
+//     })
+// })
+// // $(function() {
+// //     $(".sort_paginate_ajax").on("click", ".pagination a", function(){
+//         $.getScript(this.href);
+//         return false;
+//     });
+// });

@@ -100,5 +100,6 @@ RSpec.configure do |config|
 =end
   require 'active_record'
   require 'bullet'
+  require 'will_paginate/array'
 end
 

@@ -1,0 +1,6 @@
+$(function () {
+    $('#edit').click(function () {
+        $(this).hide().after('<%= j render :partial => "formm", :locals => { :button_label => "Edit Post", :topic => @topic ,:post => @post,flag: 0} %>')
+    })
+
+})

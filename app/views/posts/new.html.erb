@@ -1,4 +1,5 @@
 <% provide(:page_title, 'New post') %>
+
 <h1>New Post</h1>
 <% if @post.errors.any?  %>
   <ul>
@@ -8,4 +9,5 @@
   </ul>
 <% end %>
 <%= render :partial => "formm", :locals =>
-    { :button_label => "Create Post", :topic => @topic ,:post => @post} %>
+    { :button_label => "Create Post", :topic => @topic ,:post => @post,flag: 1} %>
+<div class="spinner"></div>

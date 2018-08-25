@@ -1,12 +1,24 @@
-<div class="col-sm-6 col-lg-4">
+<div class="col-sm-6 col-lg-4" id="<%=post.id%>">
   <div class="card">
-    <div class="card-topper"<%=image_tag post.image.url(:medium) %> ></div>
+    <div class="card-topper">
+      <%=image_tag post.image.url(:medium) %>
+    </div>
     <div class="card-block">
-      <h4 class="card-title"><%= link_to post.title, topic_post_path(topic_id: post.topic_id,id: post.id)%><%= "(#{post.topic.topic})" %><br></h4>
-      <p class="card-text"><%= truncate(post.description,length:30) %></p>
+      <!--      <h4 class="card-title"><%#= link_to post.title, topic_post_path(topic_id: post.topic_id,id: post.id),remote: true %><%= "(#{post.topic.topic})" %><br></h4>-->
+      <h4 class="card-title"><%= link_to post.title, topic_post_path(topic_id: post.topic_id,id: post.id) %><%= "(#{post.topic.topic})" %><br></h4>
+      <p class="card-text" id="unused"><%= truncate(post.description,length:30) %></p>
       <%= "Avg.rate:#{post.ratings.average(:rate).to_f.round(2)}"%><br>
-      <%= "#{post.comments.count} comments" %><br>
-      <%= link_to 'Read',topic_post_path(topic_id: post.topic_id,id: post.id),class: 'btn btn-read' %>
+      <%= "#{post.comments_count} comments" %><br>
+
+      <% if ReadStatus.where(user_id: current_user.id,post_id: post.id).blank? %>
+        <%= link_to 'Read',topic_post_path(topic_id: post.topic_id,id: post.id),class: 'btn btn-read read' %>
+      <% else %>
+        <%= link_to 'Continue Reading',topic_post_path(topic_id: post.topic,id: post), class: 'btn btn-read read'%>
+      <% end %>
+      <%# if can? :destroy, post %>
+        <%#= link_to "Delete", topic_post_path(id: @post), method: :delete,remote:true %>
+      <%# end %>
+
     </div>
   </div>
 </div>

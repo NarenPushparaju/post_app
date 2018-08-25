@@ -1,3 +1,11 @@
-<%provide(:page_post,"Edit #{@post.title}") %>
+<% provide(:page_title, 'New post') %>
+<h1>Edit Post</h1>
+<% if @post.errors.any?  %>
+  <ul>
+    <% @post.errors.full_messages.each do |m| %>
+      <li><%= m %></li>
+    <%end %>
+  </ul>
+<% end %>
 <%= render :partial => "formm", :locals =>
-    { :button_label => "Edit Post", :topic => @topic ,:post => @post} %>
+    { :button_label => "Edit Post", :topic => @topic ,:post => @post,flag: 0} %>

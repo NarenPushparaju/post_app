@@ -14,6 +14,7 @@ gem 'sqlite3'
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem 'cancan'
 gem 'bootstrap', '4.0.0.alpha3'
 gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 gem 'will_paginate-bootstrap'
@@ -22,6 +23,9 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem "paperclip", "~> 6.0.0"
+gem "jquery-rails"
+gem "client_side_validations"
+gem 'spinjs-rails'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -34,7 +38,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rails-controller-testing'
-gem 'bullet', group: 'development'
+gem 'devise'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -46,7 +50,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'factory_bot_rails'
   gem 'selenium-webdriver'
+  gem 'bullet'
   gem 'web-console'
+  gem 'faker'
 end
 
 group :development do

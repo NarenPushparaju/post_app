@@ -1,8 +1,9 @@
 class TopicsController < ApplicationController
+  before_action :authenticate_user!, except: [:index,:show]
   before_action :set_topic, only: [:show, :edit, :destroy, :update]
 
   def index
-    @topics = Topic.all
+    @topics = Topic.includes(:posts).all
   end
 
   def new
@@ -19,7 +20,7 @@ class TopicsController < ApplicationController
     else
       render 'new'
     end
-  end
+end
 
   def edit
   end

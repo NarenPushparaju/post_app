@@ -1,5 +1,11 @@
 require 'rails_helper'
+require'shared_context'
 RSpec.describe PostsController, type: :controller do
+  let(:user) {create(:user)}
+  before(:each) do
+    sign_in(user)
+  end
+
   describe "GET index" do
     it "renders the index template" do
       get :index
@@ -22,7 +28,7 @@ RSpec.describe PostsController, type: :controller do
     end
   describe "GET#edit" do
     context "edits and existing post" do
-      let(:post) {create(:post)}
+      let(:post) {create(:post,user: user)}
       before do
         get :edit, params: {id: post.id,topic_id: post.topic.id}
       end
@@ -65,7 +71,7 @@ RSpec.describe PostsController, type: :controller do
   end
   describe 'Post # update' do
       let(:topic) {create(:topic)}
-      let(:post) {create(:post, topic: topic)}
+      let(:post) {create(:post, topic: topic, user: user)}
       context 'valid edit' do
         before do
           post_attr = attributes_for(:post)
@@ -81,22 +87,33 @@ RSpec.describe PostsController, type: :controller do
         end
       end
   end
-  describe "Post # Delete" do
-    context "deleting an existing post" do
 
-      let(:post) {create(:post)}
-      before do
-        delete :destroy , params:{id:post.id,topic_id: 1}
-      end
+  require 'will_paginate/array'
 
-      it 'should return redirect to root' do
-        expect(response).to have_http_status 302
-      end
-      it 'should should remove entry from DB' do
-        expect(Post.find_by(id:post.id)).to be_falsey
-      end
-
+  describe "posts/index" do
+    let(:post) do [
+        FactoryBot.build(:post),
+        FactoryBot.build(:post),
+        FactoryBot.build(:post)
+    ]
     end
 
+    it "should have a pagination bar" do
+      assign(:post, post.paginate(per_page: 2))
+      render
+
+      expect(rendered).to have_selector("div.pagination")
+    end
   end
+  describe "posts/index", type: :view do
+    before(:each) do
+      # Create a list of 31 products with FactoryGirl
+      FactoryBot.(:post, create_list(:post, 31,user: user))
+    end
+
+    it "renders a list of products" do
+      allow(view).to receive_messages(:will_paginate => nil)
+      render
+    end
   end
+end

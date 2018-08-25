@@ -1,2 +1,12 @@
 @import "bootstrap";
 @import "post";
+@import "spinner";
+
+.field_with_errors .message {
+  color: #B00100;
+
+}
+#hidecomment
+{
+  display: none;
+}

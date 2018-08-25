@@ -1,27 +1,51 @@
 <% provide(:page_title, @post.title) %>
+
+<div id="edit">
 <h3 align="center"><%= "#{@post.title}(#{@topic.topic})" %></h3><br>
+<!--<p>-->
+<!--  < align="center"><%= time_ago_in_words(@post.created_at) %> ago by <%#= @post.user.email %></p>-->
 <p align="justify">
 <%=image_tag @post.image.url(:medium) %>
 <h2>Description</h2>
-<%= @post.description %></p>
-<%= link_to 'Edit', edit_topic_post_path(id: @post) %>
+<%= @post.description %>  </p>
+<% if can? :update, @post %>
+<%= link_to 'Edit', edit_topic_post_path(id: @post),remote: true, id: "click" %>
+  <% end %>
+<% if can? :destroy, @post %>
 <%= link_to "Delete", topic_post_path(id: @post), method: :delete %>
+  <% end %>
+<% if can? :tag, @post %>
 <%= link_to "Add Tag", new_post_tag_path(post_id: @post) %><br>
+  <% end %>
 <% if @tag.present? %>
   <h3>Tags</h3>
   <% @tag.each do |t| %>
     <%= "##{t.tag}" %>
   <% end %>
 <% end %>
-<%= form_tag(controller: :posts, action: :rate,:topic_id => @post.topic_id,:post_id => @post.id,method: :post) do %>
-  <% for i in 1..5 %>
-    <%= radio_button_tag(:rate, i) %>
-    <%= label_tag('name', i) %>
-    <%= hidden_field_tag(:post_id,@post.id) %>
-    <%= hidden_field_tag(:topic_id, @post.topic_id) %>
+<%#= form_tag(controller: :posts, action: :rate,:topic_id => @post.topic_id,:post_id => @post.id,method: :post) do %>
+  <%# for i in 1..5 %>
+    <%#= radio_button_tag(:rate, i) %>
+    <%#= label_tag('name', i) %>
+    <%#= hidden_field_tag(:post_id,@post.id) %>
+    <%#= hidden_field_tag(:topic_id, @post.topic_id) %>
+  <%# end %>
+  <%#= submit_tag('Rate',post_id: @post.id)%>
+<%# end %>
+
+
+<%= form_for [@topic,@post] do |f| %>
+  <%= f.fields_for :ratings,@rating do |ff| %>
+    <% for i in 1..5 %>
+      <%=ff.radio_button :rate,i %><%= i %>
+      <% end %>
+      <%= ff.hidden_field :user_id, :value=>current_user.id %>
+    <%= ff.submit "rate" %>
+    <% end %>
   <% end %>
-  <%= submit_tag('Rate',post_id: @post.id)%>
-<% end %>
+
+
+
 <% t = 0 %>
 <% if @rate.present? %>
   <% @rate.each do |k, v| %>
@@ -35,17 +59,30 @@
     <% t = t + 1 %>
   <% end %>
 <% end %>
-<%= "Average Rating #{@avg_rate}"  %>
-<div class="jumbotron">
-  <% if @comment.present? %>
-    <h3>Comments</h3>
-    <% @comment.each do |c| %>
-      <%= c.updated_at.to_time %><br>
-      <%= c.comment %>
-      <%= link_to "Edit", edit_post_comment_path(post_id: @post.id, id: c.id) %>
-      <%= link_to "Delete", post_comment_path(post_id: @post.id, id: c.id), method: :delete %><br>
-    <% end %>
-    </div>
-  <% end %>
+<%= link_to "Comments", '#' %>
 
-  <%= link_to "Add Comments", new_post_comment_path(@post.id) %>
+<div class="jumbotron" >
+  <% if @comments.present? %>
+
+    <h3>Comments</h3>
+    <ol class="commentss">
+    <%=render 'comments/comment' %>
+        <% end %>
+    </ol>
+    </div>
+  <div id="comment">
+  <%= link_to "Add Comments", new_post_comment_path(@post.id),remote: true %>
+  </div>
+<!--  <button class="btn1">Add comment</button>-->
+  <div id="hidecomment">
+  <%= form_for [@post, @post.comments.build], remote: true do |f| %>
+    <p>
+      <%= f.label :comment,"Comment" %><br>
+      <%= f.text_area :comment %>
+    </p>
+    <p>
+      <%= submit_tag "Add Comment",class: "btn btn-success",id: "submit" %>
+    </p>
+  <% end %>
+  </div>
+</div>

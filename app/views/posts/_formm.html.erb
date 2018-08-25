@@ -1,18 +1,14 @@
-<%= form_for [topic,post],:html=> {multipart: true} do |f| %>
-  <% if post.errors.any? %>
-    <% post.errors.full_messages.each do |msg| %>
-      <div class="alert alert-danger"><%= msg %></div>
-    <% end %>
-  <% end %>
+<div id="form-modal">
+<%= form_for [topic,post], validate: true,:html=> {multipart: true}, remote: true do |f| %>
   <p>
     <%= f.label :title %><br>
-    <%= f.text_field :title %></p>
+    <%= f.text_field :title , validate: { presence: true } %></p>
   <p>
     <%= f.label :image %><br>
     <%= f.file_field :image %></p>
   <p>
     <%= f.label :description %><br>
-    <%= f.text_area :description %>
+    <%= f.text_area :description ,validate: true ,required: true%>
   </p>
   <h3>Create Tag OR choose a tag</h3>
   <div class="field">
@@ -24,15 +20,28 @@
       </div>
     <% end %>
   </div>
-  <%= f.fields_for :tags do |builder| %>
-    <fieldset>
-      <%= builder.label :tag %><br>
-      <%= builder.text_field :tag %>
-      <%= builder.check_box :_destroy %>
-      <%= builder.label :_destroy, "Remove Tag" %>
-    </fieldset>
+  <% if flag==1 %>
+    <%= f.fields_for :tags do |builder| %>
+    <div class="form-group">
+      <fieldset>
+        <%= builder.label "Create a new Tag" %>
+        <%= builder.text_field :tag, {:class => 'form-control', :placeholder => 'Enter a new Tag'} %>
+      </fieldset>
+    </div>
   <% end %>
+    <% else %>
+    <%= f.fields_for :tags,post.tags.build do |builder| %>
+      <div class="form-group">
+        <fieldset>
+          <%= builder.label "Create a new Tag" %>
+          <%= builder.text_field :tag, {:class => 'form-control', :placeholder => 'Add a new Tag'} %>
+        </fieldset>
+      </div>
+    <% end %>
+    <% end %>
+
   <p>
-    <%= f.submit button_label, class: "btn btn-success" %>
+    <%= f.button  button_label, class: "btn btn-success ",id: "submit", data: {disable_with: "<i class: 'fa fa-spinner fa-spin' ></i> Saving..."} %>
   </p>
 <% end %>
+</div>

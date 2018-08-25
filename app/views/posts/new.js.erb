@@ -1,0 +1,14 @@
+$('#post').hide().after('<%= j render :partial => "formm", :locals => { :button_label => "Create Post", :topic => @topic ,:post => @post,flag: 1} %>')
+$('#new_form').enableClientSideValidations();
+//$('#form_modal').on('show.bs.modal',function(){
+//    $('form[data-validate]').enableClientSideValidations();
+//}).modal.show();
+
+//$("#new_user").validate({
+//    debug: false,
+//    rules: {
+
+//        "post[title]": {required: true},
+//        "post[description]": { minlength: 5, maxlength: 100 }
+//    }
+//});

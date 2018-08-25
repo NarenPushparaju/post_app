@@ -1,31 +1,36 @@
 <% if params[:topic_id].present? %>
+  <div class="new_post">
   <%provide(:page_title,@topic.topic) %>
   <h2><%= @topic.topic %></h2>
-  <%= link_to "Add Post",new_topic_post_path%><br>
+    <div id="new_hide">
+  <%= link_to "Add Post",new_topic_post_path,remote: true,id: "post"%><br>
+    </div>
   <% else %>
   <h1>Posts</h1>
   <%provide(:page_title,"ALL") %>
   <% end %>
-  <% @posts.each do |p| %>
-    <%= link_to p.title,topic_post_path(topic_id: p.topic_id,id: p.id)%>
-    <%= "(#{p.topic.topic})" %><br>
-    <%= "Avg.rate:#{p.ratings.average(:rate).to_f.round(2)}"%><br>
-    <%= "#{p.comments.count} comments" %><br>
-  <%end %>
-<%= will_paginate @posts ,previous_lable: '<',next_lable: '>' %>
-
-
-
-
-
-<%provide(:page_title,@title.topic) %>
-<h1>Posts</h1>
-<h2><%= @title.topic %></h2>
-<div class="row">
-  <% @post.each do |post|  %>
-    <%= post.comments.length %>
-    <%= render post %>
-  <% end %>
+<div class="row sort_paginate_ajax">
+    <%= render @posts %>
 </div>
-<%= will_paginate @post ,previous_lable: '<',next_lable: '>' %>
-<%= link_to 'Add Post',new_topic_post_path %>
+
+<%= will_paginate @posts ,renderer: BootstrapPagination::Rails %>
+
+</div>
+<!--<div id="page_links">-->
+  <%#= paginate @posts %>
+<!--</div>-->
+
+
+
+<!--
+<%#provide(:page_title,@title.topic) %>
+<h1>Posts</h1>
+<h2><%#= @title.topic %></h2>
+<div class="row">
+  <%# @post.each do |post|  %>
+    <%#= post.comments.length %>
+    <%#= render post %>
+  <%# end %>
+</div>
+<%#= will_paginate @post ,previous_lable: '<',next_lable: '>' %>
+<%#= link_to 'Add Post',new_topic_post_path %>-->

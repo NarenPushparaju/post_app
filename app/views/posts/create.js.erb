@@ -1,0 +1,7 @@
+<% if @post.errors.any? %>
+alert("ERROR(S):\n<%= j @post.errors.full_messages.join("\n") %>")
+<% else %>
+$('#new_hide').fadeOut(1000)
+$('#posts').empty();
+$('.sort_paginate_ajax').append('<%= j render @post %>').ajaxSuccess(alert('you have created a post'))
+<% end %>

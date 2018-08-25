@@ -1,0 +1,8 @@
+//$('#id_of_textarea').keypress(function(e){
+//    if(e.which == 13){
+//        $(this).closest('form').submit();
+//    }
+//});
+$('#comment_<%= @comment.id %>').hide()
+$('#edit_comment_<%= @comment.id %>').hide()
+$('.commentss').html("<%= j render 'comments/comment',:locals=>{:nope=>1} %>");

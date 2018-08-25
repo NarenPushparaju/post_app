@@ -1,3 +1,4 @@
+=begin
 class TagsController < ApplicationController
   before_action :set_post
 
@@ -39,4 +40,4 @@ def set_post
   @post = Post.find(params[:post_id])
   @topic = @post.topic_id
 end
-end
+end=end
