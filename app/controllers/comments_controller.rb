@@ -17,9 +17,8 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comments=@post.comments.all
+    @comments=@post.comments.includes(:user)
     @comment = @post.comments.new(comment_params)
-    @comment.name = current_user.name
     @comment.user = current_user
     if @comment.save
       # flash[:notice] = "Comment added Successfully"

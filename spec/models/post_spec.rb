@@ -1,4 +1,5 @@
 require 'rails_helper'
+require "cancan/matchers"
 
 RSpec.describe Post, type: :model do
 
@@ -36,5 +37,13 @@ RSpec.describe Post, type: :model do
       assc=Post.reflect_on_association(:ratings)
       expect(assc.macro).to eq :has_many
     end
+  end
+  describe Post do
+    subject(:ability){Ability.new(user)}
+    let(:user){FactoryBot.build(:user)}
+    context "User has permissions "
+    let(:post){FactoryBot.build(:post,user: user)}
+    it{ is_expected.not_to  be_able_to(:update, Post.new) }
+    it{ is_expected.not_to be_able_to(:destroy, Post.new) }
   end
 end

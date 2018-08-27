@@ -90,30 +90,25 @@ RSpec.describe PostsController, type: :controller do
 
   require 'will_paginate/array'
 
-  describe "posts/index" do
-    let(:post) do [
-        FactoryBot.build(:post),
-        FactoryBot.build(:post),
-        FactoryBot.build(:post)
-    ]
+  describe "pagination" do
+
+    it "check the pagination by number of posts per page" do
+      get :index
+      FactoryBot.create_list(:post,3,user: user)
+      expect(assigns[:posts].size).to eq 2
     end
 
-    it "should have a pagination bar" do
-      assign(:post, post.paginate(per_page: 2))
-      render
-
-      expect(rendered).to have_selector("div.pagination")
-    end
   end
-  describe "posts/index", type: :view do
-    before(:each) do
-      # Create a list of 31 products with FactoryGirl
-      FactoryBot.(:post, create_list(:post, 31,user: user))
-    end
 
-    it "renders a list of products" do
-      allow(view).to receive_messages(:will_paginate => nil)
-      render
-    end
-  end
+  # describe "posts/index", type: :view do
+  #   before(:each) do
+  #     # Create a list of 31 products with FactoryGirl
+  #     FactoryBot.(:post, create_list(:post, 31,user: user))
+  #   end
+  #
+  #   it "renders a list of products" do
+  #     allow(view).to receive_messages(:will_paginate => nil)
+  #     render
+  #   end
+  # end
 end

@@ -8,3 +8,6 @@ $(function(){
         $('#comment_comment').focus();
     });
 });
+<% if @comment.errors.any? %>
+alert("ERROR(S):\n<%= j @comment.errors.full_messages.join("\n").html_safe%>")
+<% end %>

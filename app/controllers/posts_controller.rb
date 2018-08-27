@@ -1,10 +1,9 @@
 class PostsController < ApplicationController
-  protect_from_forgery
   before_action :authenticate_user!
 
   before_action :set_topic
   before_action :set_post, only: [:show, :edit, :destroy, :update]
-  respond_to :html,:js, :json
+  before_action :read_status, only: [:show]
 
   def index
     if @topic.present?
@@ -14,40 +13,22 @@ class PostsController < ApplicationController
     end
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
 
-    respond_to do |format|
-      format.html
-      format.js
-      format.json { render :json=> @posts}
-    end
-
   end
 
   def new
     @post=@topic.posts.new
-    @post.user=current_user
     @post.tags.build
     @tag_all = Tag.all
   end
 
   def show
-    if Rating.where(post_id: @post.id, user_id: current_user.id).blank?
-      @rating = @post.ratings.build
-    else
-      @rating=Rating.where(post_id: @post.id,user_id: current_user)
-    end
 
-    # @user_id=current_user
+    @rating=Rating.where(post_id: @post.id,user_id: current_user).first_or_initialize
     @comments = @post.comments.includes(:user)
     @tag = @post.tags
-    @rate = @post.ratings.group("rate").count
-    @post.ratings.average(:rate).to_s
-    @rate = Hash[@rate.to_a.reverse]
-    @read=ReadStatus.create(user_id: current_user.id,post_id: @post.id)
-    respond_to do |format|
-      format.html
-      format.js
-      format.json { render :json=> @post }
-    end
+    @rate=@post.ratings
+
+
   end
 
   def create
@@ -55,7 +36,7 @@ class PostsController < ApplicationController
     @post.user=current_user
     respond_to do |format|
       if @post.save
-        flash[:notice] = "Post sent Successfully"
+        # flash[:notice] = "Post sent Successfully"
         format.html {redirect_to topic_post_path(id: @post.id)}
         format.js
     else
@@ -99,5 +80,8 @@ class PostsController < ApplicationController
     if params[:topic_id].present?
       @topic = Topic.find(params[:topic_id])
     end
+  end
+  def read_status
+    @read=ReadStatus.create(user_id: current_user.id,post_id: @post.id)
   end
 end

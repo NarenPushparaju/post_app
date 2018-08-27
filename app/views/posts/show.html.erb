@@ -23,17 +23,8 @@
     <%= "##{t.tag}" %>
   <% end %>
 <% end %>
-<%#= form_tag(controller: :posts, action: :rate,:topic_id => @post.topic_id,:post_id => @post.id,method: :post) do %>
-  <%# for i in 1..5 %>
-    <%#= radio_button_tag(:rate, i) %>
-    <%#= label_tag('name', i) %>
-    <%#= hidden_field_tag(:post_id,@post.id) %>
-    <%#= hidden_field_tag(:topic_id, @post.topic_id) %>
-  <%# end %>
-  <%#= submit_tag('Rate',post_id: @post.id)%>
-<%# end %>
 
-
+<!--  ############################################################# Display Form #######################################-->
 <%= form_for [@topic,@post] do |f| %>
   <%= f.fields_for :ratings,@rating do |ff| %>
     <% for i in 1..5 %>
@@ -44,28 +35,38 @@
     <% end %>
   <% end %>
 
-
-
-<% t = 0 %>
-<% if @rate.present? %>
-  <% @rate.each do |k, v| %>
-    <% t.times do %>
-      &nbsp
-    <% end %>
-    <% k.times do %>
-      <%= "*" %>
-    <% end %>
-    <%= v %><br>
-    <% t = t + 1 %>
+<!--#############################################################Display Rating #######################################-->
+  <strong>Ratings</strong><br>
+  <% c=Array.new(6,0) %>
+  <% @rate.each do |r| %>
+    <% for j in 1..5 %>
+      <% if r.rate==j %>
+      <% c[j]=c[j]+1 %>
+        <% end %>
+      <% end %>
   <% end %>
-<% end %>
-<%= link_to "Comments", '#' %>
+  <% for i in 1..5 %>
+    <% c[i] %>
+    <% end %>
+  <% t = 0 %>
+    <% for k in (1..5).reverse_each %>
+      <% t.times do %>
+        &nbsp
+      <% end %>
+      <% k.times do %>
+        <%= "*" %>
+      <% end %>
 
+      <%= c[k] %><br>
+      <% t = t + 1 %>
+    <% end %>
+
+<!--  ############################################################# Display Comments #######################################-->
 <div class="jumbotron" >
+  <h3>Comments</h3>
+  <ol class="commentss">
   <% if @comments.present? %>
 
-    <h3>Comments</h3>
-    <ol class="commentss">
     <%=render 'comments/comment' %>
         <% end %>
     </ol>
