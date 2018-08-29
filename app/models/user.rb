@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :read_statuses, dependent: :destroy
   has_many :posts, through: :read_statuses
   has_many :ratings
+  has_many :user_comment_ratings
+  has_many :comments,through: :user_comment_ratings
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

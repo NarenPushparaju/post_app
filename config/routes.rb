@@ -17,6 +17,11 @@ Rails.application.routes.draw do
       resources :tags
     end
 
+  get 'comments/rate/:id', to: 'comments#rate', as: :comment_rate
+
+  post 'posts/dateFilter'
+
   root to: 'topics#index'
-  post 'posts/rating' => 'posts#rate'
+
+
   end

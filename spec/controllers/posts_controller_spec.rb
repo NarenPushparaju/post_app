@@ -100,15 +100,17 @@ RSpec.describe PostsController, type: :controller do
 
   end
 
-  # describe "posts/index", type: :view do
-  #   before(:each) do
-  #     # Create a list of 31 products with FactoryGirl
-  #     FactoryBot.(:post, create_list(:post, 31,user: user))
-  #   end
-  #
-  #   it "renders a list of products" do
-  #     allow(view).to receive_messages(:will_paginate => nil)
-  #     render
-  #   end
+  # describe "Test ajax call" do
+  #   let(:topic) {create(:topic)}
+  #   let(:post) {create(:post, topic: topic, user: user)}
+  #   it "checks whether the new post is ajaxified " do
+  #     post_attr = attributes_for(:post)
+  #     post :create,
+  #     params: {id: post.id},
+  #     xhr: true
+  #     response.code.should == "200"
+  #     end
   # end
+
+
 end

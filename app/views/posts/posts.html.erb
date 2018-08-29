@@ -1,8 +1,0 @@
-<%provide(:page_title,"All Post") %>
-<h1>Posts</h1>
-<div class="row">
-  <% @posts.each do |post|  %>
-    <%= render post %>
-    <% end %>
-    </div>
-<%= will_paginate @posts ,previous_lable: '<',next_lable: '>' %>

@@ -41,14 +41,13 @@ GEM
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
     arel (8.0.0)
-    autoprefixer-rails (9.0.0)
-      execjs
     bcrypt (3.1.12)
     bcrypt (3.1.12-x86-mingw32)
     bindex (0.5.0)
-    bootstrap (4.0.0.alpha3)
-      autoprefixer-rails (>= 6.0.3)
-      sass (>= 3.4.19)
+    bootstrap-datepicker-rails (1.8.0.1)
+      railties (>= 3.0)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
     builder (3.2.3)
     bullet (5.7.5)
       activesupport (>= 3.0.0)
@@ -138,6 +137,7 @@ GEM
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
     pg (1.0.0)
+    pg (1.0.0-x86-mingw32)
     public_suffix (3.0.2)
     puma (3.12.0)
     rack (2.0.5)
@@ -257,7 +257,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  bootstrap (= 4.0.0.alpha3)
+  bootstrap-datepicker-rails
+  bootstrap-sass (= 3.2.0.2)
   bullet
   byebug
   cancan

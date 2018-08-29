@@ -1,6 +1,16 @@
+
+/*
+
+*= require_tree .
+*= require_self
+*= require bootstrap-datepicker
+
+ */
+
+
 @import "bootstrap";
+@import "bootstrap-sprockets";
 @import "post";
-@import "spinner";
 
 .field_with_errors .message {
   color: #B00100;

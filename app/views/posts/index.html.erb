@@ -7,13 +7,31 @@
     </div>
   <% else %>
   <h1>Posts</h1>
+  <%= form_tag({:controller => 'posts', :action => 'dateFilter'},remote: true )do %>
+    <%= date_field_tag :start_date %>
+    <%= date_field_tag :end_date%>
+    <%= submit_tag 'Submit' %>
+  <% end %>
+
+<!--  <input type="text" data-provide='datepicker' id="start-date" >-->
+<!--  <input type="text" data-provide='datepicker' id="end-date" >-->
+
+
+<!--  var start = document.getElementById('start-date').value-->
+<!--  var end = document.getElementById('end-date').value-->
+
+
+
+  <br>
   <%provide(:page_title,"ALL") %>
   <% end %>
+
 <div class="row sort_paginate_ajax">
     <%= render @posts %>
+  <%= will_paginate @posts ,renderer: BootstrapPagination::Rails %>
 </div>
 
-<%= will_paginate @posts ,renderer: BootstrapPagination::Rails %>
+<%#= js_will_paginate @posts, :params => { :my_excluded_param => nil }, render: BootstrapPagination::Rails %>
 
 </div>
 <!--<div id="page_links">-->

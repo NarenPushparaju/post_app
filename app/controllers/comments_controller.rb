@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_post
+  before_action :set_post , except: [:rate]
   before_action :set_comment, only: [:show, :edit, :destroy, :update]
 
   def index
@@ -37,6 +37,11 @@ class CommentsController < ApplicationController
     end
   end
 
+  def rate
+    # @rating=@comment.user_comment_ratings.all
+    @rating=UserCommentRating.where(comment_id: params[:id] ).includes(:user)
+  end
+
   def update
     @comments=@post.comments.all
     if @comment.update(comment_params)
@@ -62,8 +67,12 @@ class CommentsController < ApplicationController
 
   private
 
+  def comment_rating
+    params.require(:comment).permit(user_comment_ratings_attributes: [:id,:rate,:user_id])
+  end
+
   def comment_params
-    params.require(:comment).permit(:comment)
+    params.require(:comment).permit(:comment,user_comment_ratings_attributes: [:id,:rate,:user_id])
   end
 
   def set_comment

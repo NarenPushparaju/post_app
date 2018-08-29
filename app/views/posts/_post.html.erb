@@ -4,7 +4,7 @@
       <%=image_tag post.image.url(:medium) %>
     </div>
     <div class="card-block">
-      <!--      <h4 class="card-title"><%#= link_to post.title, topic_post_path(topic_id: post.topic_id,id: post.id),remote: true %><%= "(#{post.topic.topic})" %><br></h4>-->
+
       <h4 class="card-title"><%= link_to post.title, topic_post_path(topic_id: post.topic_id,id: post.id) %><%= "(#{post.topic.topic})" %><br></h4>
       <p class="card-text" id="unused"><%= truncate(post.description,length:30) %></p>
       <%= "Avg.rate:#{post.ratings.average(:rate).to_f.round(2)}"%><br>

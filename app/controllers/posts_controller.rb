@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
 
-  before_action :set_topic
+  before_action :set_topic, except: :dateFilter
   before_action :set_post, only: [:show, :edit, :destroy, :update]
   before_action :read_status, only: [:show]
 
@@ -10,6 +10,7 @@ class PostsController < ApplicationController
       @posts = @topic.posts.all
     else
       @posts = Post.includes(:topic)
+
     end
     @posts = @posts.paginate(:page => params[:page], :per_page => 2)
 
@@ -28,7 +29,17 @@ class PostsController < ApplicationController
     @tag = @post.tags
     @rate=@post.ratings
 
+  end
 
+  def dateFilter
+    if params[:start_date].present?
+      start_date= params[:start_date].to_date.beginning_of_day
+      end_date=params[:end_date].to_date.end_of_day
+    else
+      start_date=Date.yesterday.beginning_of_day
+      end_date=Date.today.end_of_day
+    end
+    @posts=Post.where(created_at: start_date..end_date).includes(:topic)
   end
 
   def create

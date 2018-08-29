@@ -20,7 +20,8 @@ gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'cancan'
-gem 'bootstrap', '4.0.0.alpha3'
+gem 'bootstrap-sass', '3.2.0.2'
+
 gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 gem 'will_paginate-bootstrap'
 # Use Uglifier as compressor for JavaScript assets
@@ -32,7 +33,7 @@ gem "jquery-rails"
 gem "client_side_validations"
 gem 'spinjs-rails'
 gem 'figaro'
-
+gem 'bootstrap-datepicker-rails'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks

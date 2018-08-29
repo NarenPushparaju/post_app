@@ -1,6 +1,6 @@
 <% @comments.each do |comment| %>
 <div id="comment_<%= comment.id %>">
-<%= time_ago_in_words(comment.updated_at)%> ago by <%= current_user.name %><br>
+<%= time_ago_in_words(comment.updated_at)%> ago by <%= comment.user.name %><br>
 <%= comment.comment %>
 <%if can? :update, comment %>
   <%= link_to "Edit", edit_post_comment_path(post_id: @post.id, id: comment.id),remote: true%>
@@ -8,5 +8,16 @@
 <%if can? :destroy, comment %>
   <%= link_to "Delete", post_comment_path(post_id: @post.id, id: comment.id), method: :delete,remote: true %><br>
 <% end %>
+  <%= link_to "Details", comment_rate_path(id: comment.id)%><br>
+  <%= form_for [@post,comment] do |f| %>
+    <%  @crating=UserCommentRating.check(comment.id,current_user) %>
+    <%= f.fields_for :user_comment_ratings, @crating do |ff| %>
+      <% for i in 1..5 %>
+        <%=ff.radio_button :rate,i %><%= i %>
+      <% end %>
+      <%= ff.submit "rate" %>
+      <%= ff.hidden_field :user_id, :value=>current_user.id %>
+    <% end %>
+  <% end %>
 </div>
 <% end %>

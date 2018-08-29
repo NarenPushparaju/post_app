@@ -1,0 +1,16 @@
+<table>
+  <thead>
+  <tr>
+  <th>Email</th>
+  <th>Rating</th>
+  </tr>
+  </thead>
+  <tbody>
+    <% @rating.each do |r| %>
+    <tr>
+      <td><%= r.user.email %></td>
+      <td><%= r.rate %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

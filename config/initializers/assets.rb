@@ -11,6 +11,6 @@ Rails.application.config.assets.precompile += %w( rails.validations.js )
 Rails.application.config.assets.precompile += %w( jquery.js )
 
 # Precompile additional assets.
-# application.js, application.scss, and all non-JS/CSS in the app/assets
+# application.js, application.css.scss, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
